@@ -1,0 +1,36 @@
+* {
+    text-align: center;
+}
+.header {
+    font-size: 50px;
+    color: mediumseagreen;
+}
+.container {
+    width: 500px;
+    text-align: center;
+    margin: auto;
+    padding: 0 20px 10px;
+    border: black solid 1px;
+    border-radius: 4%;
+    box-shadow: 7px 15px 10px  #888888;
+}
+
+.title {
+    font-size: 40px;
+}
+
+.sens, .sensR {
+    display: inline-flex;
+    align-items: baseline;
+}
+.sens {
+    margin-left: 10px;
+}
+.sensR {
+    font-size: 35px;
+}
+.symb {
+    position: relative;
+    top: -7px;
+    font-size: 25px;
+}
