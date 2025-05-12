@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Bracelet Sensor Dashboard</title>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .data {
+      font-size: 20px;
+      margin: 10px 0;
+      padding: 10px;
+      background: #f7f9fa;
+      border-radius: 5px;
+      color: #555;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Live Bracelet Data</h1>
+    <div class="data"><span class="label">Temperature (°C):</span> <span id="tempC">--</span></div>
+    <div class="data"><span class="label">Temperature (°F):</span> <span id="tempF">--</span></div>
+    <div class="data"><span class="label">Humidity (%):</span> <span id="humidity">--</span></div>
+    <div class="data"><span class="label">Heat Index (°C):</span> <span id="hic">--</span></div>
+    <div class="data"><span class="label">Heat Index (°F):</span> <span id="hif">--</span></div>
+  </div>
+
+  <script>
+    // ✅ Your actual Firebase Web SDK config
+    const firebaseConfig = {
+      apiKey: "AIzaSyClsSsK_a-_iyyFe29A3Ajt-GtA1ZNLcF0",
+      authDomain: "bracelelt-io.firebaseapp.com",
+      databaseURL: "https://bracelelt-io-default-rtdb.firebaseio.com",
+      projectId: "bracelelt-io",
+      storageBucket: "bracelelt-io.appspot.com",
+      messagingSenderId: "451398648713",
+      appId: "1:451398648713:web:xxxxxxxxxxxxxxxx" // Optional, doesn’t affect Realtime DB access
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.database();
+    const dhtRef = db.ref('DHT11');
+
+    dhtRef.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        document.getElementById('tempC').textContent = data.TemperatureC ?? 'N/A';
+        document.getElementById('tempF').textContent = data.TemperatureF ?? 'N/A';
+        document.getElementById('humidity').textContent = data.Humidity ?? 'N/A';
+        document.getElementById('hic').textContent = data.HeatIndexC ?? 'N/A';
+        document.getElementById('hif').textContent = data.HeatIndexF ?? 'N/A';
+      }
+    });
+  </script>
+
+</body>
+</html>

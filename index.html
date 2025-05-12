@@ -9,18 +9,20 @@
   </head>
   <body>
     <header>
-      <h1 class="header">Health Monioring System</h1>
+      <h1 class="header">kids Smartwatch</h1>
     </header>
     <div class="container">
       <h1 class="title">Sensor Reading</h1>
       <hr />
 
+      <!-- Change here: Room Temperature will display the TemperatureC value -->
       <img src="icons/low-temperature.png" alt="temperature" height="40px">
       <h1 class="sens">Room Temperature</h1>
-      <div class="env_temp sensR" id="Env_temp"></div>
+      <div class="temperature sensR" id="Temperature"></div>
       <div class="sensR symb">&#8451;</div>
       <hr />
       
+      <!-- Change here: Room Humidity will display the Humidity value -->
       <img src="icons/humidity.png" alt="humidity" height="40px">
       <h1 class="sens">Room Humidity</h1>
       <div class="humidity sensR" id="Humidity"></div>
@@ -38,73 +40,43 @@
       <div class="temperature sensR" id="Temperature"></div>
       <div class="sensR symb">&#8451;</div>
     </div>
-    <!-- <h1>gps</h1> -->
-    <!-- <div class="gps" id="Gps"></div> -->
-
-
-
-
-
-
-
-
-
-
 
     <script type="module">
-      // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-
       import {
         getDatabase,
         ref,
         onValue,
       } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-      // import firebase from "https://www.gstatic.com/firebasejs/9.17.2/firebase-"
-      // Your web app's Firebase configuration
+
       const firebaseConfig = {
-        apiKey: "AIzaSyBg1sWWyR12rK2gj1ehgmu5LROJH8l7aSA",
-        authDomain: "crud-d62b0.firebaseapp.com",
-        projectId: "crud-d62b0",
-        storageBucket: "crud-d62b0.appspot.com",
-        messagingSenderId: "218585713872",
-        appId: "1:218585713872:web:8b8718bd4bbef70e8a22d5",
+        apiKey: "AIzaSyClsSsK_a-_iyyFe29A3Ajt-GtA1ZNLcF0",
+        authDomain: "bracelelt-io.firebaseapp.com",
+        projectId: "bracelelt-io",
+        storageBucket: "bracelelt-io.firebasestorage.app",
+        messagingSenderId: "451398648713",
+        appId: "1:451398648713:web:88ac5801aa0fd2c0be5758",
       };
 
-      // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-
       const database = getDatabase(app);
 
       const temperature = document.getElementById("Temperature");
-      const cardiaque = document.getElementById("Cardiaque");
-      const temperature_environement = document.getElementById("Env_temp");
       const humidity = document.getElementById("Humidity");
 
-      const temperatureRef = ref(database, "temperature");
+      // Firebase reference for TemperatureC
+      const temperatureRef = ref(database, "DHT11/TemperatureC");
       onValue(temperatureRef, (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
+        console.log("TemperatureC: ", data);
         temperature.innerHTML = data;
       });
-      const cardiaqueRef = ref(database, "cardiaque");
-      onValue(cardiaqueRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-        cardiaque.innerHTML = data;
-      });
-      const tempEnvRef = ref(database, "tempEnv");
-      onValue(tempEnvRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-        temperature_environement.innerHTML = data;
-      });
-      const humidityRef = ref(database, "humidity");
+
+      // Firebase reference for Humidity
+      const humidityRef = ref(database, "DHT11/Humidity");
       onValue(humidityRef, (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
+        console.log("Humidity: ", data);
         humidity.innerHTML = data;
       });
     </script>
